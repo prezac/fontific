@@ -111,6 +111,12 @@ function fontific_init_rules(){
 		var word_spacing = rule.find('.fontific-font-spacing-word').val();
 		var letter_spacing = rule.find('.fontific-font-spacing-letter').val();
 		var font_color = rule.find('.fontific-font-color').val();
+		var text_shadow_hor = rule.find('.fontific-font-shadow-horizontal').val();
+		var text_shadow_ver = rule.find('.fontific-font-shadow-vertical').val();
+		var text_shadow_blur = rule.find('.fontific-font-shadow-blur').val();
+		var text_shadow_color = rule.find('.fontific-font-shadow-color').val();
+                var text_align = rule.find('.fontific-font-text-align').val();
+		var text_transform = rule.find('.fontific-font-text-transform').val();
 		
 		WebFont.load({
 			google: {
@@ -130,7 +136,10 @@ function fontific_init_rules(){
 			'line-height': line_height + 'em',
 			'word-spacing': word_spacing + 'em',
 			'letter-spacing': letter_spacing + 'em',
-			'color': '#' + font_color
+			'color': '#' + font_color,
+			'text-shadow': text_shadow_hor + 'px ' + text_shadow_ver + 'px '+ text_shadow_blur + 'px '+ '#' + text_shadow_color,
+			'text-align': text_align,
+			'text-transform':  text_transform,
 		});
 		
 		// Setup color picker
@@ -142,7 +151,15 @@ function fontific_init_rules(){
 				rule.find('.fontific-font-color').val(hex);
 			}
 		});
-		
+	
+                rule.find('.fontific-shadowcolorwheel').ColorPicker({
+			color: '#000000',
+			onChange: function (hsb, hex, rgb) {
+                            var shadow = rule.find('.fontific-font-shadow-horizontal').val() +'px '+rule.find('.fontific-font-shadow-vertical').val()+'px '+rule.find('.fontific-font-shadow-blur').val()+'px '+'#'+hex;
+                            rule.find('.fontific-font-preview textarea').css('text-shadow', shadow);
+			    rule.find('.fontific-font-shadow-color').val(hex);
+			}
+		});
 		
 	});
 
@@ -166,6 +183,16 @@ function fontific_init_rules(){
 		
 	});
 	
+	$('.fontific-font-text-align').change(function(){
+		var rule = $(this).parent().parent().parent().parent().parent();
+		rule.find('.fontific-font-preview textarea').css('text-align', $(this).val());
+	});
+
+ 	$('.fontific-font-text-transform').change(function(){
+		var rule = $(this).parent().parent().parent().parent().parent();
+		rule.find('.fontific-font-preview textarea').css('text-transform', $(this).val());
+	});
+
 	$('.fontific-font-variant').change(function(){
 		var rule = $(this).parent().parent().parent().parent().parent();
 		var font_variant = $(this).val();
@@ -192,15 +219,12 @@ function fontific_init_rules(){
 				rule.find('.fontific-font-summary .fontvariant').text("Regular");
 			break;
 		}
-		
-		
 	});
 
 	// Font size slider
 
 	$('.fontific-font-size-slider').each(function(){
 		var rule = $(this).parent().parent().parent().parent().parent();
-		
 		var font_size_value = rule.find('.fontific-font-size').val();
 		if( font_size_value == '' ){
 			font_size_value = 12;
@@ -289,6 +313,72 @@ function fontific_init_rules(){
 		});
 	});
 	
+        $('.fontific-shadow-horizontal').each(function(){
+		var rule = $(this).parent().parent().parent().parent().parent();
+		
+		var font_shadow_horizontal_value = rule.find('.fontific-font-shadow-horizontal').val();
+		if( font_shadow_horizontal_value == '' ){
+			font_shadow_horizontal_value = 0;
+		}
+		
+		$(this).slider({
+			min: -5,
+			max: 5,
+			value: font_shadow_horizontal_value,
+			step: 0.01,
+			slide: function(event, ui){
+				var rule = $(this).parent().parent().parent().parent().parent();
+                                var shadow = ui.value +'px '+rule.find('.fontific-font-shadow-vertical').val()+'px '+rule.find('.fontific-font-shadow-blur').val()+'px #'+rule.find('.fontific-font-shadow-color').val();
+				rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
+				rule.find('.fontific-font-shadow-horizontal').val(ui.value);
+			}
+		});
+	});
+        
+        $('.fontific-shadow-vertical').each(function(){
+		var rule = $(this).parent().parent().parent().parent().parent();
+		
+		var font_shadow_vertical_value = rule.find('.fontific-font-shadow-vertical').val();
+		if( font_shadow_vertical_value == '' ){
+			font_shadow_vertical_value = 0;
+		}
+		
+		$(this).slider({
+			min: -5,
+			max: 5,
+			value: font_shadow_vertical_value,
+			step: 0.01,
+			slide: function(event, ui){
+				var rule = $(this).parent().parent().parent().parent().parent();
+                                var shadow = rule.find('.fontific-font-shadow-horizontal').val()+'px '+ui.value +'px '+rule.find('.fontific-font-shadow-blur').val()+'px #'+rule.find('.fontific-font-shadow-color').val();
+                                rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
+				rule.find('.fontific-font-shadow-vertical').val(ui.value);
+			}
+		});
+	});
+        
+        $('.fontific-shadow-blur').each(function(){
+		var rule = $(this).parent().parent().parent().parent().parent();
+		
+		var font_shadow_blur_value = rule.find('.fontific-font-shadow-blur').val();
+		if( font_shadow_blur_value == '' ){
+			font_shadow_blur_value = 0;
+		}
+		
+		$(this).slider({
+			min: -5,
+			max: 5,
+			value: font_shadow_blur_value,
+			step: 0.01,
+			slide: function(event, ui){
+				var rule = $(this).parent().parent().parent().parent().parent();
+                                var shadow = rule.find('.fontific-font-shadow-horizontal').val()+'px '+rule.find('.fontific-font-shadow-vertical').val()+'px '+ui.value+'px #'+rule.find('.fontific-font-shadow-color').val();
+                                rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
+				rule.find('.fontific-font-shadow-blur').val(ui.value);
+			}
+		});
+	});
+                
 	$('.fontific-selector').each(function(){
 		
 		/* Init all selector fields */
@@ -339,7 +429,6 @@ function fontific_init_rules(){
 		
 		$(this).click(function(){
 			
-
 			if( confirm( 'Are you sure you want to delete the rule?' ) ){
 				rule.slideUp('slow', function(){
 					rule.remove();
@@ -399,7 +488,12 @@ $(document).ready(function(){
 			var font_variant = rule.find('.fontific-font-variant').val();
 			var font_weight = "normal";
 			var font_style = "normal";
-			
+                        var text_shadow_hor = rule.find('.fontific-font-shadow-horizontal').val();
+                        var text_shadow_ver = rule.find('.fontific-font-shadow-vertical').val();
+                        var text_shadow_blur = rule.find('.fontific-font-shadow-blur').val();
+                        var text_shadow_color = rule.find('.fontific-font-shadow-color').val();
+                        var text_shadow = text_shadow_hor+" "+text_shadow_ver+" "+text_shadow_blur+" "+text_shadow_color;
+	
 			switch(font_variant){
 				case 'r': // Regular
 				break;
@@ -429,7 +523,10 @@ $(document).ready(function(){
 				font_line_height: rule.find('.fontific-font-spacing-line').val(),
 				font_word_spacing: rule.find('.fontific-font-spacing-word').val(),
 				font_letter_spacing: rule.find('.fontific-font-spacing-letter').val(),
-				collapsed: (rule.hasClass('collapsed'))?true:false
+                                text_shadow: text_shadow,
+                                text_align: rule.find('.fontific-font-text-align').val(),
+                                text_transform: rule.find('.fontific-font-text-transform').val(),
+                                collapsed: (rule.hasClass('collapsed'))?true:false
 			};
 			rules.push( rule_capsule );
 		});

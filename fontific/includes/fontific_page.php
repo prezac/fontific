@@ -3,7 +3,7 @@
 <div id="fontific-plugin-description">
 	<ul>
 		<li><?php _e('For more details about Google Web Fonts please visit', 'fontific')?> <a href="http://www.google.com/webfonts" title="<?php _e('Official Google Web Fonts website', 'fontific')?>"><?php _e('Google Fonts website', 'fontific')?></a></li>
-		<li><?php _e('Need help? Please visit', 'fontific')?> <a href="http://kringapps.com/fontific" title="<?php _e('Official Fontific website', 'fontific')?>"><?php _e('official plugin website', 'fontific')?></a></li>
+		<li><?php _e('Need help? Please visit', 'fontific')?> <a href="http://www.pr-software.net/wp" title="<?php _e('Official Fontific website', 'fontific')?>"><?php _e('official plugin website', 'fontific')?></a></li>
 	</ul>
 	
 </div>

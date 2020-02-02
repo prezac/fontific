@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Fontific
-Plugin URI: http://kringapps.com/fontific
+Plugin URI: https://github.com/prezac/fontific/
 Description: Fontific allows you to use Google Fonts on your WordPress website. You can create as many font rules as you wish and apply them to elements on your website pages via css selector.
 Version: 0.1.6
-Requires at least: Wordpress 3.1
-Tested up to: Wordpress 3.1
+Requires at least: Wordpress 5.3.2
+Tested up to: Wordpress 5.3.2
 License: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
 Author: Andrei Ivasiuc
 Author URI: http://kringapps.com/fontific
@@ -42,30 +42,23 @@ function fontific_print_styles(){
 	wp_enqueue_style( 'fontific', plugins_url('/'.FONTIFIC_INCLUDES.'/fontific.css', __FILE__) );
 	wp_enqueue_style( 'jquery.slider', plugins_url('/'.FONTIFIC_INCLUDES.'/slider/css/slider.css', __FILE__) );
 	wp_enqueue_style( 'jquery.colorpicker', plugins_url('/'.FONTIFIC_INCLUDES.'/colorpicker/css/colorpicker.css', __FILE__) );
-	
 }
 
 add_action('init', 'fontific_frontend');
 
 function fontific_frontend(){
-	
 	load_plugin_textdomain( 'fontific', false, dirname( plugin_basename( __FILE__ ) ) . '/' . FONTIFIC_INCLUDES . 'languages/' );
-	
 	wp_enqueue_script( 'google.api', 'https://www.google.com/jsapi' );
 
 	// Getting font family names
-	
 	$rules = unserialize( get_option('fontific-rules') );
 	$families = array();
-	
 	if( !empty( $rules ) ){
-		
 		foreach( $rules as $rule ){
 			$families[] = $rule['font_family'];
-		}	
+		}
 
 		$google_fonts_url = 'https://fonts.googleapis.com/css?family=' . join('|', $families) . '&subset=cyrillic,latin';
-	
 		wp_enqueue_style( 'google.fonts', $google_fonts_url );
 	}
 }
@@ -73,17 +66,12 @@ function fontific_frontend(){
 add_action('wp_head', 'fontific_js_rules');
 
 function fontific_js_rules(){
-	
 	$rules = unserialize( get_option('fontific-rules') );
-	
 	$html = '';
-	
 	if( !empty($rules) ){
-	
 		$html .= '<style type="text/css" media="screen">';
-	
 		foreach( $rules as $id => $rule ){
-
+			$shadow = explode(" ", $rule['text_shadow']);
 			$html .= "$rule[selector]{\n";
 			$html .= "font-family: '$rule[font_family]' !important;\n";
 			$html .= "font-weight: $rule[font_weight] !important;\n";
@@ -93,12 +81,13 @@ function fontific_js_rules(){
 			$html .= "line-height: $rule[font_line_height]em !important;\n";
 			$html .= "word-spacing: $rule[font_word_spacing]em !important;\n";
 			$html .= "letter-spacing: $rule[font_letter_spacing]em !important;\n";
+			$html .= "text-shadow: $shadow[0]px $shadow[1]px $shadow[2]px #$shadow[3] !important;\n";
+			$html .= "text-align: $rule[text_align] !important;\n";
+			$html .= "text-transform: $rule[text_transform] !important;\n";
 			$html .= "}\n";
 		}
 		$html .= "</style>";
-	
 	}
-
 	echo $html;
 }
 
@@ -111,19 +100,14 @@ function fontific_menu(){
 	$subpage['capability'] = 'manage_options';
 	$subpage['menu_slug'] = 'fontific_page';
 	$subpage['function'] = 'fontific_page';
-	
 	$page = add_submenu_page( $subpage['parent_slug'], $subpage['page_title'], $subpage['menu_title'], $subpage['capability'], $subpage['menu_slug'], $subpage['function']);
-	
 	add_action( "admin_print_scripts-$page", 'fontific_print_scripts' );
 	add_action( "admin_print_styles-$page", 'fontific_print_styles' );
-	
 }
 
 function fontific_page(){
 	global $google_fonts, $rules, $rule;
-	
 	$rules = unserialize( get_option('fontific-rules') );
-	
 	include( FONTIFIC_INCLUDES . 'fontific_page.php' );
 }
 
@@ -137,9 +121,7 @@ add_action('wp_ajax_fontific_add_rule', 'ajax_fontific_add_rule');
 
 function ajax_fontific_add_rule() {
 	global $rule, $google_fonts;
-	
 	$rule = array();
-	
 	$rule['id'] = 'fc-' . time();
 	$rule['selector'] = __('Enter selector here', 'fontific');
 	$rule['font_family'] = 'PT Sans';
@@ -149,22 +131,22 @@ function ajax_fontific_add_rule() {
 	$rule['font_line_height'] = '1.4';
 	$rule['font_word_spacing'] = '0';
 	$rule['font_letter_spacing'] = '0';
+	$rule['font_shadow_horizontal'] = '0';
+	$rule['font_shadow_vertical'] = '0';
+	$rule['font_shadow_blur'] = '0';
+	$rule['font_shadow_color'] = '000000';
+	$rule['font_text_align'] = 'initial';
+	$rule['font_text_transform'] = 'none';
 	$rule['collapsed'] = false;
-
-	
 	include( FONTIFIC_INCLUDES . 'fontific_rule.php' );
-	
 	die();
 }
 
 add_action('wp_ajax_fontific_save_all', 'ajax_fontific_save_all');
 
 function ajax_fontific_save_all() {
-	
 	$rules = $_POST['rules'];
-	
 	update_option( 'fontific-rules', serialize( $rules ) );
-
 	die();
 }
 
@@ -172,17 +154,10 @@ function ajax_fontific_save_all() {
 add_action('wp_ajax_fontific_delete', 'ajax_fontific_delete');
 
 function ajax_fontific_delete() {
-	
 	$rules = unserialize( get_option('fontific-rules') );
-	
 	$rule = $_POST['rule'];
-
 	unset($rules[$rule]);
-	
 	update_option( 'fontific-rules', serialize( $rules ) );
-
 	die();
 }
-
-
 ?>

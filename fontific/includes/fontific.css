@@ -1,3 +1,8 @@
+.fontific-font-shadow{margin-top: 5px;float: left;}
+.fontific-shadow-horizontal-wrap, .fontific-shadow-vertical-wrap, .fontific-shadow-blur-wrap {float: left;width: 160px;}
+.fontific-font-shadow-horizontal, .fontific-font-shadow-vertical, .fontific-font-shadow-blur{margin-top: 5px;float:}
+.fontific-font-text-align-wrap, .fontific-font-text-transform-wrap {float: left; width: 120px;}
+
 .fontific-controls{
 	margin-top: 30px;
 	width: 80%;
@@ -201,26 +206,26 @@
 				margin-top: 10px;
 			}
 
-		.fontific-font-color-outer-wrap{
+		.fontific-font-color-outer-wrap, .fontific-font-shadow-color-outer-wrap{
 			float: left;
 			margin-left: 10px;
 		}
 		
-			.fontific-font-color-wrap{
+			.fontific-font-color-wrap, .fontific-font-shadow-color-wrap{
 				padding: 2px 0 3px 6px;
 				background: #fff;
 				-moz-border-radius: 3px;
 				border: 1px solid #dfdfdf;
 			}
 	
-				.fontific-font-color-wrap label{
+				.fontific-font-color-wrap label, .fontific-font-shadow-color-wrap label{
 					display: inline !important;
 					vertical-align: baseline;
 					margin: 0 !important;
 					color: #777;
 				}
 		
-			.fontific-font-color{
+			.fontific-font-color, .fontific-font-shadow-color{
 				background: transparent !important;
 				border: none !important;
 				text-transform: uppercase;
@@ -228,7 +233,7 @@
 				padding-left: 0;
 			}
 			
-			.fontific-colorwheel{
+			.fontific-colorwheel, .fontific-shadowcolorwheel {
 				position: relative;
 				top: 3px;
 				left: 2px;
@@ -245,7 +250,7 @@
 			width: 106px;
 		}	
 		
-			.fontific-spacing-line, .fontific-spacing-word, .fontific-spacing-letter{
+			.fontific-shadow-horizontal, .fontific-shadow-vertical, .fontific-shadow-blur, .fontific-spacing-line, .fontific-spacing-word, .fontific-spacing-letter{
 				font-size: 10px !important;
 				width: 90px;
 				margin-left: 5px;

@@ -1,8 +1,8 @@
 === Fontific | Google Fonts ===
 Contributors: andrei_ivasiuc
 Tags: google fonts, google, fonts, plugin, admin, google font API, free fonts
-Requires at least: 3.0.0
-Tested up to: 3.1
+Requires at least: 5.3.2
+Tested up to: 5.3.2
 Stable tag: trunk
 
 Fontific allows you to use Google Fonts on your WordPress website.
@@ -22,9 +22,10 @@ To use one of those fantastic fonts, you just need to add a new font rule in Fon
 * English
 * German (Till Grzegorczyk)
 * Polish (Piotr Dąbrowski)
+* Czech (Petr Rezac)
 * Russian (поддерживаются кирилические шрифты)
 
-[Fontific website](http://kringapps.com/fontific "Fontific official website")
+[Fontific website](https://github.com/prezac/fontific/ "Fontific official website")
 
 == Installation ==
 
@@ -53,6 +54,9 @@ New fonts added to Google Font Library are not automatically added to plugin fon
 == Screenshots ==
 
 == Changelog ==
+
+= 0.1.6 =
+Adapted for WP 5.3.2, Add Czech translation(Petr Rezac), expand properties text align, text transform and text shadow(Petr Rezac) 
 
 = 0.1.5 =
 Updated font list

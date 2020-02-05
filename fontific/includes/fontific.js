@@ -108,6 +108,8 @@ function fontific_init_rules(){
 		var font_family = rule.find('.fontific-font-family').val();
 		var font_size = rule.find('.fontific-font-size').val();
 		var line_height = rule.find('.fontific-font-spacing-line').val();
+		var font_weight = rule.find('.fontific-font-weight').val();
+		var font_style = rule.find('.fontific-font-style').val();
 		var word_spacing = rule.find('.fontific-font-spacing-word').val();
 		var letter_spacing = rule.find('.fontific-font-spacing-letter').val();
 		var font_color = rule.find('.fontific-font-color').val();
@@ -134,6 +136,8 @@ function fontific_init_rules(){
 		rule.find('.fontific-font-preview textarea').css({
 			'font-size': font_size + 'px',
 			'line-height': line_height + 'em',
+			'font-weight': font_weight,
+			'font-style': font_style,
 			'word-spacing': word_spacing + 'em',
 			'letter-spacing': letter_spacing + 'em',
 			'color': '#' + font_color,
@@ -202,21 +206,29 @@ function fontific_init_rules(){
 				rule.find('.fontific-font-preview textarea').css('font-weight', 'normal');
 				rule.find('.fontific-font-preview textarea').css('font-style', 'italic');
 				rule.find('.fontific-font-summary .fontvariant').text("Italic");
+				rule.find('.fontific-font-weight').val('normal');
+				rule.find('.fontific-font-style').val('italic');
 			break;
 			case 'b':
 				rule.find('.fontific-font-preview textarea').css('font-weight', 'bold');
 				rule.find('.fontific-font-preview textarea').css('font-style', 'normal');
 				rule.find('.fontific-font-summary .fontvariant').text("Bold");
+				rule.find('.fontific-font-weight').val('bold');
+				rule.find('.fontific-font-style').val('normal');
 			break;
 			case 'ib':
 				rule.find('.fontific-font-preview textarea').css('font-weight', 'bold');
 				rule.find('.fontific-font-preview textarea').css('font-style', 'italic');
 				rule.find('.fontific-font-summary .fontvariant').text("BoldItalic");
+				rule.find('.fontific-font-weight').val('bold');
+				rule.find('.fontific-font-style').val('italic');
 			break;
 			default:
 				rule.find('.fontific-font-preview textarea').css('font-weight', 'normal');
 				rule.find('.fontific-font-preview textarea').css('font-style', 'normal');
 				rule.find('.fontific-font-summary .fontvariant').text("Regular");
+				rule.find('.fontific-font-weight').val('normal');
+				rule.find('.fontific-font-style').val('normal');
 			break;
 		}
 	});
@@ -366,8 +378,8 @@ function fontific_init_rules(){
 		}
 		
 		$(this).slider({
-			min: -5,
-			max: 5,
+			min: 0,
+			max: 15,
 			value: font_shadow_blur_value,
 			step: 0.01,
 			slide: function(event, ui){

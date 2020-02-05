@@ -7,6 +7,22 @@ $font_variants = array(
 	'ib' => __('BoldItalic', 'fontific'),
 );
 
+$font_text_align = array(
+	'initial' => __('initial', 'fontific'),
+	'center' => __('center', 'fontific'),
+	'left' => __('left', 'fontific'),
+	'right' => __('right', 'fontific'),
+	'justify' => __('justify', 'fontific'),
+	'inherit' => __('inherit', 'fontific'),
+);
+
+$font_text_transform = array(
+	'none' => __('none', 'fontific'),
+	'capitalize' => __('capitalize', 'fontific'),
+	'uppercase' => __('uppercase', 'fontific'),
+        'lowercase' => __('lowercase', 'fontific'),
+);
+
 $shadow = explode(" ", $rule['text_shadow']);
 ?>
 <div id="fontific-rule-<?php echo $rule['id'];?>" class="fontific-rule<?php if($rule['collapsed']=='true'):?> collapsed<?php endif?>" rel="<?php echo $rule['id'];?>">
@@ -43,6 +59,8 @@ $shadow = explode(" ", $rule['text_shadow']);
 				</div><!-- .fontific-font-family-wrap -->
 
 				<div class="fontific-font-variant-wrap">
+				        <input type="hidden" class="fontific-font-weight" value="<?php echo $rule['font_weight']?>"/>
+				        <input type="hidden" class="fontific-font-style" value="<?php echo $rule['font_style']?>"/>
 					<label><?php _e('Variant', 'fontific');?></label>
 					<select class="fontific-font-variant" name="font[variant]">
 						<?php foreach( $font_variants as $k => $variant ):?>
@@ -101,21 +119,25 @@ $shadow = explode(" ", $rule['text_shadow']);
 			<div class="fontific-font-text-align-wrap">
 				<label><?php _e('Text align', 'fontific');?></label>
 				<select class="fontific-font-text-align" name="font[text_align]">
-					<option selected="selected" value="initial"><?php _e('initial', 'fontific');?></option>
-					<option value="center"><?php _e('center', 'fontific');?></option>
-					<option value="left"><?php _e('left', 'fontific');?></option>
-					<option value="right"><?php _e('right', 'fontific');?></option>
-					<option value="justify"><?php _e('justify', 'fontific');?></option>
-					<option value="inherit"><?php _e('inherit', 'fontific');?></option>
+					<?php foreach( $font_text_align as $k => $text_align ):?>
+						<?php if( $k == $rule['text_align'] ):?>
+						<option selected="selected" value="<?php echo $k ?>"><?php echo $text_align;?></option>
+						<?php else: ?>
+						<option value="<?php echo $k ?>"><?php echo $text_align;?></option>
+						<?php endif;?>
+					<?php endforeach; ?>
 				</select>
 			</div><!-- .fontific-font-text-align-wrap -->
 			<div class="fontific-font-text-transform-wrap">
 				<label><?php _e('Text transform', 'fontific');?></label>
 				<select class="fontific-font-text-transform" name="font[text_transform]">
-					<option selected="selected" value="none"><?php _e('none', 'fontific');?></option>
-					<option value="capitalize"><?php _e('capitalize', 'fontific');?></option>
-					<option value="uppercase"><?php _e('uppercase', 'fontific');?></option>
-					<option value="lowercase"><?php _e('lowercase', 'fontific');?></option>
+					<?php foreach( $font_text_transform as $k => $text_transform ):?>
+						<?php if( $k == $rule['text_transform'] ):?>
+						<option selected="selected" value="<?php echo $k ?>"><?php echo $text_transform;?></option>
+						<?php else: ?>
+						<option value="<?php echo $k ?>"><?php echo $text_transform;?></option>
+						<?php endif;?>
+					<?php endforeach; ?>
 				</select>
 			</div><!-- .fontific-font-text-transform-wrap -->
 		</div><!-- .fontiffic-font-spacing -->
@@ -139,8 +161,8 @@ $shadow = explode(" ", $rule['text_shadow']);
 			<div class="fontific-font-shadow-color-outer-wrap">
 				<label><?php _e('Shadow color', 'fontific');?></label>
 				<span class="fontific-font-shadow-color-wrap">
-					<label for="fsc">#</label>
-					<input type="text" size="6" name="font[shadow_color]" class="fontific-font-shadow-color" maxlength="6" value="<?php echo $shadow[3]?>"/>
+					<label for="fc">#</label>
+					<input type="text" size="6" name="text[shadow_color]" class="fontific-font-shadow-color" maxlength="6" value="<?php if ($shadow[3]=="") {echo $rule['text_shadow_color'];}else{echo $shadow[3];}?>"/>
 				</span>
 				<img src="<?php echo plugins_url( 'images/color.png', __FILE__ );?>" alt="Color wheel" class="fontific-shadowcolorwheel"/>
 			</div><!-- .fontiffic-font-shadow_color-outer-wrap -->

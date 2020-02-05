@@ -131,12 +131,12 @@ function ajax_fontific_add_rule() {
 	$rule['font_line_height'] = '1.4';
 	$rule['font_word_spacing'] = '0';
 	$rule['font_letter_spacing'] = '0';
-	$rule['font_shadow_horizontal'] = '0';
-	$rule['font_shadow_vertical'] = '0';
-	$rule['font_shadow_blur'] = '0';
-	$rule['font_shadow_color'] = '000000';
-	$rule['font_text_align'] = 'initial';
-	$rule['font_text_transform'] = 'none';
+	$rule['text_shadow_horizontal'] = '0';
+	$rule['text_shadow_vertical'] = '0';
+	$rule['text_shadow_blur'] = '0';
+	$rule['text_shadow_color'] = '000000';
+	$rule['text_align'] = 'initial';
+	$rule['text_transform'] = 'none';
 	$rule['collapsed'] = false;
 	include( FONTIFIC_INCLUDES . 'fontific_rule.php' );
 	die();

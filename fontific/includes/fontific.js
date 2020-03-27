@@ -326,8 +326,8 @@ function fontific_init_rules(){
 	});
 	
         $('.fontific-shadow-horizontal').each(function(){
-		var rule = $(this).parent().parent().parent().parent().parent();
-		
+		var rule = $(this).parent().parent().parent().parent();
+		//alert(rule.attr('id'));		
 		var font_shadow_horizontal_value = rule.find('.fontific-font-shadow-horizontal').val();
 		if( font_shadow_horizontal_value == '' ){
 			font_shadow_horizontal_value = 0;
@@ -339,7 +339,7 @@ function fontific_init_rules(){
 			value: font_shadow_horizontal_value,
 			step: 0.01,
 			slide: function(event, ui){
-				var rule = $(this).parent().parent().parent().parent().parent();
+				var rule = $(this).parent().parent().parent().parent();
                                 var shadow = ui.value +'px '+rule.find('.fontific-font-shadow-vertical').val()+'px '+rule.find('.fontific-font-shadow-blur').val()+'px #'+rule.find('.fontific-font-shadow-color').val();
 				rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
 				rule.find('.fontific-font-shadow-horizontal').val(ui.value);
@@ -348,7 +348,7 @@ function fontific_init_rules(){
 	});
         
         $('.fontific-shadow-vertical').each(function(){
-		var rule = $(this).parent().parent().parent().parent().parent();
+		var rule = $(this).parent().parent().parent().parent();
 		
 		var font_shadow_vertical_value = rule.find('.fontific-font-shadow-vertical').val();
 		if( font_shadow_vertical_value == '' ){
@@ -361,7 +361,7 @@ function fontific_init_rules(){
 			value: font_shadow_vertical_value,
 			step: 0.01,
 			slide: function(event, ui){
-				var rule = $(this).parent().parent().parent().parent().parent();
+				var rule = $(this).parent().parent().parent().parent();
                                 var shadow = rule.find('.fontific-font-shadow-horizontal').val()+'px '+ui.value +'px '+rule.find('.fontific-font-shadow-blur').val()+'px #'+rule.find('.fontific-font-shadow-color').val();
                                 rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
 				rule.find('.fontific-font-shadow-vertical').val(ui.value);
@@ -370,7 +370,7 @@ function fontific_init_rules(){
 	});
         
         $('.fontific-shadow-blur').each(function(){
-		var rule = $(this).parent().parent().parent().parent().parent();
+		var rule = $(this).parent().parent().parent().parent();
 		
 		var font_shadow_blur_value = rule.find('.fontific-font-shadow-blur').val();
 		if( font_shadow_blur_value == '' ){
@@ -383,7 +383,7 @@ function fontific_init_rules(){
 			value: font_shadow_blur_value,
 			step: 0.01,
 			slide: function(event, ui){
-				var rule = $(this).parent().parent().parent().parent().parent();
+				var rule = $(this).parent().parent().parent().parent();
                                 var shadow = rule.find('.fontific-font-shadow-horizontal').val()+'px '+rule.find('.fontific-font-shadow-vertical').val()+'px '+ui.value+'px #'+rule.find('.fontific-font-shadow-color').val();
                                 rule.find('.fontific-font-preview textarea').css('text-shadow', shadow );
 				rule.find('.fontific-font-shadow-blur').val(ui.value);
@@ -470,6 +470,21 @@ function fontific_init_rules(){
 $(document).ready(function(){
 	
 	fontific_init_rules();
+
+	$('.fontific-shadow-horizontal').mouseup(function() {
+		$('.save-all a').click();		
+		fontific_init_rules();
+	});
+
+	$('.fontific-shadow-vertical').mouseup(function() {
+		$('.save-all a').click();		
+		fontific_init_rules();
+	});
+
+	$('.fontific-shadow-blur').mouseup(function() {
+		$('.save-all a').click();		
+		fontific_init_rules();
+	});
 	
 	// Add new font rule
 	$('#fontific-add-rule a').click(function(){
@@ -482,7 +497,7 @@ $(document).ready(function(){
 				$(container).append(response);
 				fontific_init_rules();
 			});
-		
+		$('.save-all a').click();		
 	});
 	
 	// Save all changes
